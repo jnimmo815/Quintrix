@@ -1,2 +1,6 @@
 This a new file
+
 want to commit from new branch
+
+want to commit from branch
+
