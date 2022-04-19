@@ -38,7 +38,7 @@ public class App
       catNames.forEach(System.out :: println);
       
      catNames.stream().sorted().map(String::toUpperCase) // intermediate
-              .forEach(System.out::println);;
+              .forEach(System.out::println);
        
     }
 }
