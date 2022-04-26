@@ -20,34 +20,34 @@ import com.quintrix.james.JPADemo.models.GetEmployeeResponse;
 import com.quintrix.james.JPADemo.service.EmployeeService;
 import com.quintrix.james.JPADemo.service.EmployeeServiceImpl;
 
-
 @RestController
 public class EmployeeController {
-	
+
 	@Autowired
 	EmployeeService employeeService;
-	
+
 	@RequestMapping(method = RequestMethod.GET, value = "/employees")
-    GetEmployeeResponse getEmployees(@RequestParam(name = "lastName", required = false) String lastName) {    	    	
-    	
-		return employeeService.getEmployee(lastName);   	    	
-    }
-	
-	 @RequestMapping(method = RequestMethod.GET, value = "/employees/{id}")
-	    Employee getCarDetails(@PathVariable("id") Integer id) { 
-	    	
-	    	return employeeService.getEmployeeById(id);    	
-	    	
-	    }
-	 
-	 @RequestMapping(method = RequestMethod.POST, value = "/employees")
-	 	Employee addCars(@RequestBody Employee employee) {   
-	    	
-	    	return employeeService.addEmployee(employee);    	
-	    }	
-	 
-	 @DeleteMapping("/employees/{id}")
-	  void deleteEmployee(@PathVariable Integer id) {
-		 employeeService.deleteEmployeeById(id);
-	  }
+	GetEmployeeResponse getEmployees(@RequestParam(name = "lastName", required = false) String lastName) {
+
+		return employeeService.getEmployee(lastName);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/employees/{id}")
+	Employee getEmployeerDetails(@PathVariable("id") Integer id) {
+
+		return employeeService.getEmployeeById(id);
+
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/employees")
+	Employee addEmployee(@RequestBody Employee employee) {
+
+		return employeeService.addEmployee(employee);
+	}
+
+	@DeleteMapping("/employees/{id}")
+	void deleteEmployee(@PathVariable Integer id) {
+		employeeService.deleteEmployeeById(id);
+	}
+
 }

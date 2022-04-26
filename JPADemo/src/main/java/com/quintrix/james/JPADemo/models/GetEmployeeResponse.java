@@ -3,9 +3,9 @@ package com.quintrix.james.JPADemo.models;
 import java.util.List;
 
 public class GetEmployeeResponse {
-	
+
 	private String availableEmployee;
-	
+
 	List<ClientEmployee> availableEmployeeList;
 
 	// Getters and Setters
@@ -24,7 +24,5 @@ public class GetEmployeeResponse {
 	public void setAvailableEmployeeList(List<ClientEmployee> availableEmployeeList) {
 		this.availableEmployeeList = availableEmployeeList;
 	}
-	
-	
- 
+
 }

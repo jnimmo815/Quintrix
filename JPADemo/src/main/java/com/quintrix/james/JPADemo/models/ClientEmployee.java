@@ -3,10 +3,11 @@ package com.quintrix.james.JPADemo.models;
 public class ClientEmployee {
 
 	private String firstName;
-	
+
 	private String lastName;
-	
-	public ClientEmployee() {}
+
+	public ClientEmployee() {
+	}
 
 	public ClientEmployee(String firstName, String lastName) {
 		super();
@@ -30,6 +31,5 @@ public class ClientEmployee {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
-	
+
 }
