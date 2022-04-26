@@ -48,6 +48,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		GetEmployeeResponse getEmployeeResponse = new GetEmployeeResponse();
 
+		// My improvement
+		employeeList = (List<Employee>) employeeRepository.findAll();
+
 		if (lastName != null) {
 			getEmployeeResponse.setAvailableEmployeeList(employeeList.stream()
 					.filter(e -> e.getLastName().equals(lastName))

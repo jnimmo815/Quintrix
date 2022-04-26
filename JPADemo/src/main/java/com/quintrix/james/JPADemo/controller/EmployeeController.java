@@ -33,14 +33,14 @@ public class EmployeeController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/employees/{id}")
-	Employee getCarDetails(@PathVariable("id") Integer id) {
+	Employee getEmployeerDetails(@PathVariable("id") Integer id) {
 
 		return employeeService.getEmployeeById(id);
 
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/employees")
-	Employee addCars(@RequestBody Employee employee) {
+	Employee addEmployee(@RequestBody Employee employee) {
 
 		return employeeService.addEmployee(employee);
 	}
@@ -49,4 +49,5 @@ public class EmployeeController {
 	void deleteEmployee(@PathVariable Integer id) {
 		employeeService.deleteEmployeeById(id);
 	}
+
 }
