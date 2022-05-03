@@ -11,6 +11,6 @@ public interface CustomerService {
 	
 	public Customer addCustomer(Customer customer);
 	
-	//public  Customer  getCustomerById(Integer id);
+	public  Customer  getCustomerById(Long id);
 	
 }

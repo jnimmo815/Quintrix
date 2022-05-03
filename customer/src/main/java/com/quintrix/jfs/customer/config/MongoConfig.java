@@ -1,8 +1,12 @@
 package com.quintrix.jfs.customer.config;
 
+import java.time.Duration;
+
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.web.client.RestTemplate;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -26,4 +30,11 @@ public class MongoConfig {
     public MongoTemplate mongoTemplate() throws Exception {
         return new MongoTemplate(mongo(), "test");
     }
+    
+    @Bean
+	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+	 
+	return builder.setConnectTimeout(Duration.ofMillis(5000))
+			.setReadTimeout(Duration.ofMillis(5000)).build();
+	}
 }
