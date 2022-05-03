@@ -1,0 +1,14 @@
+spring:
+  jpa:
+    show-sql: true  
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:mysql://localhost:3306/jdbcdemo 
+    username: 'root'
+    password: 'root'
+    driver-class-name: com.mysql.jdbc.Driver
+  
+agentService:
+  getUrl: https://gorest.co.in/public/v2/users
+
