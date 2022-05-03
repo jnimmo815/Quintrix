@@ -4,7 +4,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +26,13 @@ public class CustomerController {
     	
 		return customerService.getAllCustomers();   	    	
     }	
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/customer/{id}")
+	Customer getCustomerDetails(@PathVariable("id") Long id) {
+
+		return customerService.getCustomerById(id);
+
+	}
 		
     	
 	@RequestMapping(method = RequestMethod.POST, value = "/customer")

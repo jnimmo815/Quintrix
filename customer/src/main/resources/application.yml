@@ -1,2 +1,5 @@
 server:
   port : 8081
+  
+agentService:
+  getUr2: http://localhost:8081/customer
