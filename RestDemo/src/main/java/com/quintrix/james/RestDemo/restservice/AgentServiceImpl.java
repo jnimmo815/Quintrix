@@ -1,11 +1,14 @@
 package com.quintrix.james.RestDemo.restservice;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +27,20 @@ public class AgentServiceImpl  implements AgentService{
 	@Value("${agentService.getUrl}")
 	String agentServiceGetUrl;
 	
+	/*@Value("${agentService.deleteUrl}")
+	String agentServiceDeleteUrl;*/
+	
 	@Override
 	public List<Agent> getAgentList() {
 		List<Agent> agentsList = null;
 		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", "Bearer 451455b7959a5c441f1829858925b8d76dfa7ffcd8d7b82e448c8ad0f4eca058");
+		HttpEntity<Agent> requestBody = new HttpEntity<>(headers);	
+		
+		
 		ResponseEntity<List<Agent>> agenstListResponseEntity = restTemplate.exchange(agentServiceGetUrl,
-				HttpMethod.GET, null, new ParameterizedTypeReference<List<Agent>>() {});
+				HttpMethod.GET, requestBody, new ParameterizedTypeReference<List<Agent>>() {});
 		
 		if (agenstListResponseEntity.getStatusCode() == HttpStatus.OK) {
 			agentsList = agenstListResponseEntity.getBody();				
@@ -41,31 +52,48 @@ public class AgentServiceImpl  implements AgentService{
 	@Override
 	public Agent getAgentById(Integer id) {
 		
-		List<Agent> agentsList = getAgentList();			
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", "Bearer 451455b7959a5c441f1829858925b8d76dfa7ffcd8d7b82e448c8ad0f4eca058");
+		HttpEntity<Agent> requestBody = new HttpEntity<>(null, headers);	
 		
-		Optional<Agent> agent = agentsList.stream().filter(a -> a.getId().equals(id)).findAny();			
+		Map<String, Integer> params = new HashMap<>();
+		params.put("id", id);
+        		
+		// Agent agent = restTemplate.getForObject(agentServiceGetUrl, Agent.class, params);
+		ResponseEntity<Agent> agenstResponseEntity = restTemplate.exchange(agentServiceGetUrl,
+				HttpMethod.GET,requestBody , Agent.class, params); 			
 				
-		return agent.get();
+		return agenstResponseEntity.getBody();
 	}
 
+	
+
 	@Override
-	public List<Agent> addAgent(Agent agent) {		
+	public Agent addAgent(Agent agent) {	
+		
+		// Demonstration use of headers
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", "Bearer 451455b7959a5c441f1829858925b8d76dfa7ffcd8d7b82e448c8ad0f4eca058");	
+		
+		HttpEntity<Agent> requestBody = new HttpEntity<>(agent, headers);			
 			
-		
-		List<Agent> agentsList = getAgentList();
-		
-		agentsList.add(0, agent);
-		
-		return agentsList;
+		ResponseEntity<Agent> agenstListResponseEntity = restTemplate.exchange(agentServiceGetUrl,
+				HttpMethod.POST,requestBody , Agent.class); 		
+					
+		return agenstListResponseEntity.getBody();
 	}
 
 	@Override
-	public void deleteById(Integer id) {
+	public void deleteById(Long id) {
 		
-		List<Agent> agentsList = getAgentList();	
+		Map<String, Long> params = new HashMap <String, Long> ();		
 		
-		agentsList.removeIf(a -> a.getId().equals(id));		
+		 params.put("id", id);
+		 
+		 RestTemplate restTemplate = new RestTemplate();
+		 
+		 //restTemplate.delete(agentServiceDeleteUrl, params);
 	}
-
+	
 		
 }

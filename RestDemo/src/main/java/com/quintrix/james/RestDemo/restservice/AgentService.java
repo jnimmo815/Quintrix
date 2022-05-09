@@ -11,8 +11,16 @@ public interface AgentService {
 	
 	public Agent getAgentById(Integer id);	
 	
-	public List<Agent> addAgent(Agent agent);	
+	//public String addAgent(Agent agent);
 	
-	public void deleteById(Integer id);
+	//public List<Agent> addAgent(Agent agent);
+	
+	public Agent addAgent(Agent agent);
+	
+	public void deleteById(Long id);
+
+	// public List<Agent> getAgents();
+	
+	
 		
 }
