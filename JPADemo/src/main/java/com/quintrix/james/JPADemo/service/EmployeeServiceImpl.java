@@ -1,12 +1,11 @@
 package com.quintrix.james.JPADemo.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 
 import com.quintrix.james.JPADemo.entity.Employee;
@@ -20,9 +19,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	EmployeeRepository employeeRepository;
 
-	List<Employee> employeeList = new ArrayList<>(
-			Arrays.asList(new Employee(1, "John", "Smith"), new Employee(1, "Tom", "Jones")));
-
 	@Override
 	public Employee getEmployeeById(Integer id) {
 
@@ -31,7 +27,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		if (employee.isPresent()) {
 			return employee.get();
 		} else {
-			return new Employee();
+			throw new IllegalStateException("Invalid Id");
 		}
 	}
 
@@ -49,7 +45,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		GetEmployeeResponse getEmployeeResponse = new GetEmployeeResponse();
 
 		// My improvement
-		employeeList = (List<Employee>) employeeRepository.findAll();
+		Iterable<Employee> empl = employeeRepository.findAll();
+		List<Employee> employeeList = Streamable.of(empl).toList();
 
 		if (lastName != null) {
 			getEmployeeResponse.setAvailableEmployeeList(employeeList.stream()
@@ -66,6 +63,33 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void deleteEmployeeById(Integer id) {
 
 		employeeRepository.deleteById(id);
+	}
+
+	@Override
+	public GetEmployeeResponse getAllEmployees() {
+		// This method retrieves all employees without directly accessing the database
+		// and hides the id of each employee.
+
+		GetEmployeeResponse getEmployeeResponse = new GetEmployeeResponse();
+
+		// My improvement
+		Iterable<Employee> empl = employeeRepository.findAll();
+		List<Employee> employeeList = Streamable.of(empl).toList();
+
+		getEmployeeResponse.setAvailableEmployeeList(employeeList.stream()
+				.map(e -> new ClientEmployee(e.getFirstName(), e.getLastName())).collect(Collectors.toList()));
+
+		getEmployeeResponse.setAvailableEmployee("Available");
+
+		return getEmployeeResponse;
+	}
+
+	@Override
+	public Employee updateEmployee(Employee employee) {
+
+		Employee updatedEmployee = employeeRepository.save(employee);
+
+		return updatedEmployee;
 	}
 
 }

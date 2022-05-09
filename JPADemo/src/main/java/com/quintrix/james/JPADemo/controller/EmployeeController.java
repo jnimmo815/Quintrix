@@ -1,11 +1,5 @@
 package com.quintrix.james.JPADemo.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +42,18 @@ public class EmployeeController {
 	@DeleteMapping("/employees/{id}")
 	void deleteEmployee(@PathVariable Integer id) {
 		employeeService.deleteEmployeeById(id);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/employees/all")
+	GetEmployeeResponse getAllEmployees() {
+		
+		return employeeService.getAllEmployees();
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT, value = "/employees")
+	Employee updateEmployee(@RequestBody Employee employee) {
+
+		return employeeService.updateEmployee(employee);
 	}
 
 }
