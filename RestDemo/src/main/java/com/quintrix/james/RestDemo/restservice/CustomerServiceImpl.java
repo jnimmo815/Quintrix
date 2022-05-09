@@ -47,13 +47,9 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer getCustomerById(Long id) {
 				
-		Map<String, Long> params = new HashMap<>();
-		params.put("id", id);	
-				
-		ResponseEntity<Customer> customer = restTemplate.exchange(getCustomerUrl, HttpMethod.GET, null, Customer.class, params);	
+		ResponseEntity<Customer> customer = restTemplate.getForEntity(getCustomerUrl + "/" + id, Customer.class);
 						
-		return customer.getBody();
-		
+		return customer.getBody();		
 	}
 
 	@Override

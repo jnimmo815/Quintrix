@@ -1,5 +1,6 @@
 package com.quintrix.james.RestDemo.restservice;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -54,19 +56,19 @@ public class AgentServiceImpl  implements AgentService{
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", "Bearer 451455b7959a5c441f1829858925b8d76dfa7ffcd8d7b82e448c8ad0f4eca058");
-		HttpEntity<Agent> requestBody = new HttpEntity<>(null, headers);	
+		HttpEntity<Agent> requestBody = new HttpEntity<>(null, headers);
 		
-		Map<String, Integer> params = new HashMap<>();
-		params.put("id", id);
+		
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
         		
-		// Agent agent = restTemplate.getForObject(agentServiceGetUrl, Agent.class, params);
-		ResponseEntity<Agent> agenstResponseEntity = restTemplate.exchange(agentServiceGetUrl,
-				HttpMethod.GET,requestBody , Agent.class, params); 			
+		ResponseEntity<Agent> agenstResponseEntity = restTemplate.exchange(agentServiceGetUrl + "/" + id,
+				HttpMethod.GET,requestBody , Agent.class); 		
+		
 				
 		return agenstResponseEntity.getBody();
-	}
-
-	
+	}	
 
 	@Override
 	public Agent addAgent(Agent agent) {	
@@ -84,15 +86,11 @@ public class AgentServiceImpl  implements AgentService{
 	}
 
 	@Override
-	public void deleteById(Long id) {
+	public void deleteById(Long id) {			
 		
-		Map<String, Long> params = new HashMap <String, Long> ();		
-		
-		 params.put("id", id);
-		 
 		 RestTemplate restTemplate = new RestTemplate();
 		 
-		 //restTemplate.delete(agentServiceDeleteUrl, params);
+		 restTemplate.delete(agentServiceGetUrl + "/" + 100);
 	}
 	
 		
