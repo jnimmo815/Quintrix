@@ -16,4 +16,11 @@ agentService:
   getUrl: https://gorest.co.in/public/v2/users
   getCustomerUrl: http://localhost:8081/customer
 
-
+logging:
+  level:
+    org.springframework: ERROR
+    com.quintrix: DEBUG
+  pattern:
+    console: " %-5level %logger{36} - %msg%n"
+    file: "%d %p %c{1.} [%t] %m%n"
+  file: app.log

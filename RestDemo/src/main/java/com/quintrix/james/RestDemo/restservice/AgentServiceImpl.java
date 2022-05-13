@@ -1,8 +1,7 @@
 package com.quintrix.james.RestDemo.restservice;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,89 +10,82 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.quintrix.james.RestDemo.models.agent.Agent;
 
-
 @Component
-public class AgentServiceImpl  implements AgentService{
-	
+public class AgentServiceImpl implements AgentService {
+
 	@Autowired
-	RestTemplate restTemplate; 
-	
+	RestTemplate restTemplate;
+
 	@Value("${agentService.getUrl}")
 	String agentServiceGetUrl;
-	
-	/*@Value("${agentService.deleteUrl}")
-	String agentServiceDeleteUrl;*/
-	
+
+	/*
+	 * @Value("${agentService.deleteUrl}") String agentServiceDeleteUrl;
+	 */
+
 	@Override
 	public List<Agent> getAgentList() {
 		List<Agent> agentsList = null;
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", "Bearer 451455b7959a5c441f1829858925b8d76dfa7ffcd8d7b82e448c8ad0f4eca058");
-		HttpEntity<Agent> requestBody = new HttpEntity<>(headers);	
-		
-		
-		ResponseEntity<List<Agent>> agenstListResponseEntity = restTemplate.exchange(agentServiceGetUrl,
-				HttpMethod.GET, requestBody, new ParameterizedTypeReference<List<Agent>>() {});
-		
+		HttpEntity<Agent> requestBody = new HttpEntity<>(headers);
+
+		ResponseEntity<List<Agent>> agenstListResponseEntity = restTemplate.exchange(agentServiceGetUrl, HttpMethod.GET,
+				requestBody, new ParameterizedTypeReference<List<Agent>>() {
+				});
+
 		if (agenstListResponseEntity.getStatusCode() == HttpStatus.OK) {
-			agentsList = agenstListResponseEntity.getBody();				
-		}		
-		
+			agentsList = agenstListResponseEntity.getBody();
+		}
+
 		return agentsList;
 	}
 
 	@Override
 	public Agent getAgentById(Integer id) {
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", "Bearer 451455b7959a5c441f1829858925b8d76dfa7ffcd8d7b82e448c8ad0f4eca058");
-		HttpEntity<Agent> requestBody = new HttpEntity<>(null, headers);	
-		
-		Map<String, Integer> params = new HashMap<>();
-		params.put("id", id);
-        		
-		// Agent agent = restTemplate.getForObject(agentServiceGetUrl, Agent.class, params);
-		ResponseEntity<Agent> agenstResponseEntity = restTemplate.exchange(agentServiceGetUrl,
-				HttpMethod.GET,requestBody , Agent.class, params); 			
-				
+		HttpEntity<Agent> requestBody = new HttpEntity<>(null, headers);
+
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		ResponseEntity<Agent> agenstResponseEntity = restTemplate.exchange(agentServiceGetUrl + "/" + id,
+				HttpMethod.GET, requestBody, Agent.class);
+
 		return agenstResponseEntity.getBody();
 	}
 
-	
-
 	@Override
-	public Agent addAgent(Agent agent) {	
-		
+	public Agent addAgent(Agent agent) {
+
 		// Demonstration use of headers
 		HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", "Bearer 451455b7959a5c441f1829858925b8d76dfa7ffcd8d7b82e448c8ad0f4eca058");	
-		
-		HttpEntity<Agent> requestBody = new HttpEntity<>(agent, headers);			
-			
-		ResponseEntity<Agent> agenstListResponseEntity = restTemplate.exchange(agentServiceGetUrl,
-				HttpMethod.POST,requestBody , Agent.class); 		
-					
+		headers.set("Authorization", "Bearer 451455b7959a5c441f1829858925b8d76dfa7ffcd8d7b82e448c8ad0f4eca058");
+
+		HttpEntity<Agent> requestBody = new HttpEntity<>(agent, headers);
+
+		ResponseEntity<Agent> agenstListResponseEntity = restTemplate.exchange(agentServiceGetUrl, HttpMethod.POST,
+				requestBody, Agent.class);
+
 		return agenstListResponseEntity.getBody();
 	}
 
 	@Override
 	public void deleteById(Long id) {
-		
-		Map<String, Long> params = new HashMap <String, Long> ();		
-		
-		 params.put("id", id);
-		 
-		 RestTemplate restTemplate = new RestTemplate();
-		 
-		 //restTemplate.delete(agentServiceDeleteUrl, params);
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		restTemplate.delete(agentServiceGetUrl + "/" + 100);
 	}
-	
-		
+
 }
