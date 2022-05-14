@@ -1,4 +1,4 @@
-package com.quintrix.james.RestDemo;
+package com.quintrix.james.restdemo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
