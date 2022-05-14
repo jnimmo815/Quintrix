@@ -1,107 +1,107 @@
-package com.quintrix.james.RestDemo.service;
+package com.quintrix.james.restdemo.service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
-
-import com.quintrix.james.RestDemo.entity.Employee;
-import com.quintrix.james.RestDemo.models.ClientEmployee;
-import com.quintrix.james.RestDemo.models.GetEmployeeResponse;
-import com.quintrix.james.RestDemo.models.agent.Agent;
-import com.quintrix.james.RestDemo.repository.EmployeeRepository;
-import com.quintrix.james.RestDemo.restservice.AgentService;
+import com.quintrix.james.restdemo.entity.Employee;
+import com.quintrix.james.restdemo.models.ClientEmployee;
+import com.quintrix.james.restdemo.models.GetEmployeeResponse;
+import com.quintrix.james.restdemo.models.agent.Agent;
+import com.quintrix.james.restdemo.repository.EmployeeRepository;
+import com.quintrix.james.restdemo.restservice.AgentService;
 
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-	@Autowired
-	EmployeeRepository employeeRepository;
-	
-	@Autowired
-	AgentService agentService;	
-	
-	@Override
-	public Employee getEmployeeById(Integer id) {
+  @Autowired
+  EmployeeRepository employeeRepository;
 
-		Optional<Employee> employee = employeeRepository.findById(id);		
+  @Autowired
+  AgentService agentService;
 
-		if (employee.isPresent()) {
-			return employee.get();
-		} else {
-			return new Employee();
-		}
-	}
+  @Override
+  public Employee getEmployeeById(Integer id) {
 
-	@Override
-	public Employee addEmployee(Employee employee) {
+    Optional<Employee> employee = employeeRepository.findById(id);
 
-		Employee createdEmployee = employeeRepository.save(employee);
+    if (employee.isPresent()) {
+      return employee.get();
+    } else {
+      return new Employee();
+    }
+  }
 
-		return createdEmployee;
-	}
+  @Override
+  public Employee addEmployee(Employee employee) {
 
-	@Override
-	public GetEmployeeResponse getEmployee(String lastName) {
+    Employee createdEmployee = employeeRepository.save(employee);
 
-		GetEmployeeResponse getEmployeeResponse = new GetEmployeeResponse();
+    return createdEmployee;
+  }
 
-		// My improvement
-		Iterable<Employee> empl = employeeRepository.findAll();
-		List<Employee> employeeList = Streamable.of(empl).toList();
+  @Override
+  public GetEmployeeResponse getEmployee(String lastName) {
 
-		if (lastName != null) {
-			getEmployeeResponse.setAvailableEmployeeList(employeeList.stream()
-					.filter(e -> e.getLastName().equals(lastName))
-					.map(e -> new ClientEmployee(e.getFirstName(), e.getLastName())).collect(Collectors.toList()));
-		}
+    GetEmployeeResponse getEmployeeResponse = new GetEmployeeResponse();
 
-		getEmployeeResponse.setAvailableEmployee("Available");
-		
-		List<Agent> agentsList = agentService.getAgentList();
-		
-		getEmployeeResponse.setAgentsList(agentsList);
+    // My improvement
+    Iterable<Employee> empl = employeeRepository.findAll();
+    List<Employee> employeeList = Streamable.of(empl).toList();
 
-		return getEmployeeResponse;
-	}
+    if (lastName != null) {
+      getEmployeeResponse.setAvailableEmployeeList(
+          employeeList.stream().filter(e -> e.getLastName().equals(lastName))
+              .map(e -> new ClientEmployee(e.getFirstName(), e.getLastName()))
+              .collect(Collectors.toList()));
+    }
 
-	@Override
-	public void deleteEmployeeById(Integer id) {
+    getEmployeeResponse.setAvailableEmployee("Available");
 
-		employeeRepository.deleteById(id);
-	}
+    List<Agent> agentsList = agentService.getAgentList();
 
-	@Override
-	public GetEmployeeResponse getAllEmployees() {
-		// This method retrieves all employees without directly accessing the database
-		// and hides the id of each employee.
+    getEmployeeResponse.setAgentsList(agentsList);
 
-		GetEmployeeResponse getEmployeeResponse = new GetEmployeeResponse();
+    return getEmployeeResponse;
+  }
 
-		// My improvement
-		Iterable<Employee> empl = employeeRepository.findAll();
-		List<Employee> employeeList = Streamable.of(empl).toList();
+  @Override
+  public void deleteEmployeeById(Integer id) {
 
-		getEmployeeResponse.setAvailableEmployeeList(employeeList.stream()
-				.map(e -> new ClientEmployee(e.getFirstName(), e.getLastName())).collect(Collectors.toList()));
+    employeeRepository.deleteById(id);
+  }
 
-		getEmployeeResponse.setAvailableEmployee("Available");
+  @Override
+  public GetEmployeeResponse getAllEmployees() {
+    // This method retrieves all employees without directly accessing the database
+    // and hides the id of each employee.
 
-		return getEmployeeResponse;
-	}
+    GetEmployeeResponse getEmployeeResponse = new GetEmployeeResponse();
 
-	@Override
-	public Employee updateEmployee(Employee employee) {
+    // My improvement
+    Iterable<Employee> empl = employeeRepository.findAll();
+    List<Employee> employeeList = Streamable.of(empl).toList();
 
-		Employee updatedEmployee = employeeRepository.save(employee);
+    getEmployeeResponse.setAvailableEmployeeList(
+        employeeList.stream().map(e -> new ClientEmployee(e.getFirstName(), e.getLastName()))
+            .collect(Collectors.toList()));
 
-		return updatedEmployee;
-	}
+    getEmployeeResponse.setAvailableEmployee("Available");
 
-	
-	
+    return getEmployeeResponse;
+  }
+
+  @Override
+  public Employee updateEmployee(Employee employee) {
+
+    Employee updatedEmployee = employeeRepository.save(employee);
+
+    return updatedEmployee;
+  }
+
+
+
 }

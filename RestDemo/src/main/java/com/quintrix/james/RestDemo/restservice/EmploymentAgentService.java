@@ -1,11 +1,10 @@
-package com.quintrix.james.RestDemo.restservice;
+package com.quintrix.james.restdemo.restservice;
 
 import java.util.List;
-
-import com.quintrix.james.RestDemo.models.agent.EmploymentAgent;
+import com.quintrix.james.restdemo.models.agent.EmploymentAgent;
 
 public interface EmploymentAgentService {
-	
-	public List<EmploymentAgent> getEmploymentAgentList();
+
+  public List<EmploymentAgent> getEmploymentAgentList();
 
 }

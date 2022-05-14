@@ -1,35 +1,35 @@
-package com.quintrix.james.RestDemo.exception;
+package com.quintrix.james.restdemo.exception;
 
 public class Error {
 
-	private String message;
+  private String message;
 
-	private String customMessage;
+  private String customMessage;
 
-	private int httpStatusCode;
+  private int httpStatusCode;
 
-	public String getCustomMessage() {
-		return customMessage;
-	}
+  public String getCustomMessage() {
+    return customMessage;
+  }
 
-	public void setCustomMessage(String customMessage) {
-		this.customMessage = customMessage;
-	}
+  public void setCustomMessage(String customMessage) {
+    this.customMessage = customMessage;
+  }
 
-	public int getHttpStatusCode() {
-		return httpStatusCode;
-	}
+  public int getHttpStatusCode() {
+    return httpStatusCode;
+  }
 
-	public void setHttpStatusCode(int httpStatusCode) {
-		this.httpStatusCode = httpStatusCode;
-	}
+  public void setHttpStatusCode(int httpStatusCode) {
+    this.httpStatusCode = httpStatusCode;
+  }
 
-	public String getMessage() {
-		return message;
-	}
+  public String getMessage() {
+    return message;
+  }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+  public void setMessage(String message) {
+    this.message = message;
+  }
 
 }

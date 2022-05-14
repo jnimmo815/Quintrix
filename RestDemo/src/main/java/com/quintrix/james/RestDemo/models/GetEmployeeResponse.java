@@ -1,42 +1,41 @@
-package com.quintrix.james.RestDemo.models;
+package com.quintrix.james.restdemo.models;
 
 import java.util.List;
-
-import com.quintrix.james.RestDemo.models.agent.Agent;
+import com.quintrix.james.restdemo.models.agent.Agent;
 
 
 
 public class GetEmployeeResponse {
 
-	private String availableEmployee;
-	
-	private List<Agent> agentsList;	
+  private String availableEmployee;
 
-	List<ClientEmployee> availableEmployeeList;
+  private List<Agent> agentsList;
 
-	// Getters and Setters	
-	public String getAvailableEmployee() {
-		return availableEmployee;
-	}
+  List<ClientEmployee> availableEmployeeList;
 
-	public List<Agent> getAgentsList() {
-		return agentsList;
-	}
+  // Getters and Setters
+  public String getAvailableEmployee() {
+    return availableEmployee;
+  }
 
-	public void setAgentsList(List<Agent> agentsList) {
-		this.agentsList = agentsList;
-	}
+  public List<Agent> getAgentsList() {
+    return agentsList;
+  }
 
-	public void setAvailableEmployee(String availableEmployee) {
-		this.availableEmployee = availableEmployee;
-	}
+  public void setAgentsList(List<Agent> agentsList) {
+    this.agentsList = agentsList;
+  }
 
-	public List<ClientEmployee> getAvailableEmployeeList() {
-		return availableEmployeeList;
-	}
+  public void setAvailableEmployee(String availableEmployee) {
+    this.availableEmployee = availableEmployee;
+  }
 
-	public void setAvailableEmployeeList(List<ClientEmployee> availableEmployeeList) {
-		this.availableEmployeeList = availableEmployeeList;
-	}
+  public List<ClientEmployee> getAvailableEmployeeList() {
+    return availableEmployeeList;
+  }
+
+  public void setAvailableEmployeeList(List<ClientEmployee> availableEmployeeList) {
+    this.availableEmployeeList = availableEmployeeList;
+  }
 
 }

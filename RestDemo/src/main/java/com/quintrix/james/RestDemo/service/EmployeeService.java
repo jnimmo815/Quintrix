@@ -1,21 +1,21 @@
-package com.quintrix.james.RestDemo.service;
+package com.quintrix.james.restdemo.service;
 
-import com.quintrix.james.RestDemo.entity.Employee;
-import com.quintrix.james.RestDemo.models.GetEmployeeResponse;
+import com.quintrix.james.restdemo.entity.Employee;
+import com.quintrix.james.restdemo.models.GetEmployeeResponse;
 
 public interface EmployeeService {
-	
 
-	Employee addEmployee(Employee employee);
 
-	Employee updateEmployee(Employee employee);
+  Employee addEmployee(Employee employee);
 
-	void deleteEmployeeById(Integer id);
+  Employee updateEmployee(Employee employee);
 
-	Employee getEmployeeById(Integer id);
+  void deleteEmployeeById(Integer id);
 
-	GetEmployeeResponse getEmployee(String lastName);
+  Employee getEmployeeById(Integer id);
 
-	GetEmployeeResponse getAllEmployees();
+  GetEmployeeResponse getEmployee(String lastName);
+
+  GetEmployeeResponse getAllEmployees();
 
 }

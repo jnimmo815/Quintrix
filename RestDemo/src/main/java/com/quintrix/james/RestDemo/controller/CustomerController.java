@@ -1,7 +1,6 @@
-package com.quintrix.james.RestDemo.controller;
+package com.quintrix.james.restdemo.controller;
 
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,40 +10,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.quintrix.james.RestDemo.models.customer.Customer;
-import com.quintrix.james.RestDemo.restservice.CustomerService;
+import com.quintrix.james.restdemo.models.customer.Customer;
+import com.quintrix.james.restdemo.restservice.CustomerService;
 
 @RestController
 public class CustomerController {
 
-	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+  private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
-	@Autowired
-	CustomerService customerService;
+  @Autowired
+  CustomerService customerService;
 
-	@RequestMapping(method = RequestMethod.GET, value = "/customers/{id}")
-	Customer getCustomerById(@PathVariable("id") Long id) {
+  @RequestMapping(method = RequestMethod.GET, value = "/customers/{id}")
+  Customer getCustomerById(@PathVariable("id") Long id) {
 
-		logger.debug("Request: Called getCustomerById Controller {}", id);
-		return customerService.getCustomerById(id);
-	}
+    logger.debug("Request: Called getCustomerById Controller {}", id);
+    return customerService.getCustomerById(id);
+  }
 
-	@RequestMapping(method = RequestMethod.GET, value = "/customers")
-	List<Customer> getCustomerList() {
+  @RequestMapping(method = RequestMethod.GET, value = "/customers")
+  List<Customer> getCustomerList() {
 
-		return customerService.getCustomers();
-	}
+    return customerService.getCustomers();
+  }
 
-	@RequestMapping(method = RequestMethod.POST, value = "/customers")
-	Customer addCustomer(@RequestBody Customer customer) {
+  @RequestMapping(method = RequestMethod.POST, value = "/customers")
+  Customer addCustomer(@RequestBody Customer customer) {
 
-		return customerService.addCustomer(customer);
-	}
+    return customerService.addCustomer(customer);
+  }
 
-	@DeleteMapping("/customers/{id}")
-	public void deleteCustomerById(@PathVariable("id") Long id) {
+  @DeleteMapping("/customers/{id}")
+  public void deleteCustomerById(@PathVariable("id") Long id) {
 
-		customerService.deleteCustomerById(id);
-	}
+    customerService.deleteCustomerById(id);
+  }
+
+  public CustomerService getCustomerService() {
+    return customerService;
+  }
+
+  public void setCustomerService(CustomerService customerService) {
+    this.customerService = customerService;
+  }
+
+
 }
