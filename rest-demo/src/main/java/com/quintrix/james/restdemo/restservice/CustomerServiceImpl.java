@@ -46,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
 
       ResponseEntity<Customer> customer =
           restTemplate.exchange(getCustomerUrl + "/" + id, HttpMethod.GET, null, Customer.class);
-      return customer.getBody();
+      return customer.getBody(); // null indicates the lack of headers
 
     } catch (Exception ex) {
 
