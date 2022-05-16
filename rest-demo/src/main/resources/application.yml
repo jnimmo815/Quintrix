@@ -24,3 +24,6 @@ logging:
     console: " %-5level %logger{36} - %msg%n"
     file: "%d %p %c{1.} [%t] %m%n"
   file: app.log
+  
+config:
+  timeOut: 5000
