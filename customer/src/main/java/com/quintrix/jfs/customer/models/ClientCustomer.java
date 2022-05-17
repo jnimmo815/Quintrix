@@ -12,6 +12,17 @@ public class ClientCustomer {
 
   private String state;
 
+  public ClientCustomer() {}
+
+  public ClientCustomer(String name, String phone, Integer age, Boolean active, String state) {
+    super();
+    this.name = name;
+    this.phone = phone;
+    this.age = age;
+    this.active = active;
+    this.state = state;
+  }
+
   // Getters and Setters
   public String getName() {
     return name;

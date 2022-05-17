@@ -1,7 +1,6 @@
 package com.quintrix.james.restdemo.models.customer;
 
 import java.util.List;
-import com.quintrix.jfs.quintrixspring.models.agent.Agent;
 
 public class GetCustomerResponse {
 
@@ -9,7 +8,7 @@ public class GetCustomerResponse {
 
   private List<ClientCustomer> availableCustomersList;
 
-  List<Agent> agentsList;
+  // List<Agent> agentsList;
 
   // Getters and Setters
   public String getAvailableCustomers() {
@@ -26,14 +25,6 @@ public class GetCustomerResponse {
 
   public void setAvailableCustomersList(List<ClientCustomer> availableCustomersList) {
     this.availableCustomersList = availableCustomersList;
-  }
-
-  public List<Agent> getAgentsList() {
-    return agentsList;
-  }
-
-  public void setAgentsList(List<Agent> agentsList) {
-    this.agentsList = agentsList;
   }
 
 

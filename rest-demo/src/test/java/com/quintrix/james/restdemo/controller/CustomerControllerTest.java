@@ -1,5 +1,7 @@
 package com.quintrix.james.restdemo.controller;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -38,12 +40,15 @@ public class CustomerControllerTest {
 
 
     customerController.setCustomerService(customerServiceMock);
-    // Mockito.when(customerServiceMock.getCustomers("James")).thenReturn(getCustomerResponse);
+    Mockito.when(customerServiceMock.getCostomers("James")).thenReturn(getCustomerResponse);
 
     MockMvc mockMvc = standaloneSetup(customerController).build();
 
     mockMvc.perform(get("/customers/").param("name", "James"))
-        .andExpect(MockMvcResultMatchers.status().isOk()).andExpect(jsonPath("$", notNullValue()));
+        .andExpect(MockMvcResultMatchers.status().isOk()).andExpect(jsonPath("$", notNullValue()))
+        .andExpect(jsonPath("$.availableCustomersList", notNullValue()))
+        .andExpect(jsonPath("$.availableCustomersList", hasSize(1))) // Passes up to this line
+        .andExpect(jsonPath("$..availableCustomersList[0].age", is(27)));
 
   }
 }

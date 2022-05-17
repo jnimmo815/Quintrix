@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.quintrix.james.restdemo.models.customer.Customer;
 import com.quintrix.james.restdemo.restservice.CustomerService;
 
+
 @RestController
 public class CustomerController {
 
@@ -30,9 +31,15 @@ public class CustomerController {
 
   @RequestMapping(method = RequestMethod.GET, value = "/customers")
   List<Customer> getCustomerList() {
-
-    return customerService.getCustomers();
+    return customerService.getCustomersList();
   }
+
+  /*
+   * @RequestMapping(method = RequestMethod.GET, value = "/customers") GetCustomerResponse
+   * getCustomers(@RequestParam(name = "name", required = false) String name) {
+   * 
+   * return customerService.getCostomers(name); }
+   */
 
   @RequestMapping(method = RequestMethod.POST, value = "/customers")
   Customer addCustomer(@RequestBody Customer customer) {
