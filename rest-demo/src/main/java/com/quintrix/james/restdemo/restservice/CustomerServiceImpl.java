@@ -1,5 +1,6 @@
 package com.quintrix.james.restdemo.restservice;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import com.quintrix.james.restdemo.exception.CustomerNotFoundException;
+import com.quintrix.james.restdemo.models.customer.ClientCustomer;
 import com.quintrix.james.restdemo.models.customer.Customer;
+import com.quintrix.james.restdemo.models.customer.GetCustomerResponse;
 
 @Component
 public class CustomerServiceImpl implements CustomerService {
@@ -26,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
   String getCustomerUrl;
 
   @Override
-  public List<Customer> getCustomers() {
+  public List<Customer> getCustomersList() {
     List<Customer> customerList = null;
 
     ResponseEntity<List<Customer>> customerListResponseEntity = restTemplate.exchange(
@@ -71,6 +74,37 @@ public class CustomerServiceImpl implements CustomerService {
 
     restTemplate.exchange(getCustomerUrl + "/" + id, HttpMethod.DELETE, null, Customer.class);
 
+  }
+
+  @Override
+  public GetCustomerResponse getCostomers(String name) {
+
+    GetCustomerResponse getCustomerResponse = new GetCustomerResponse();
+
+    /*
+     * Map<String, String> params = new HashMap<>(); params.put("name", name);
+     */
+
+    ResponseEntity<Customer> customertResponseEntity =
+        restTemplate.exchange(getCustomerUrl, HttpMethod.GET, null, Customer.class);
+
+    Customer customer = customertResponseEntity.getBody();
+
+    List<ClientCustomer> custsList = new ArrayList<>();
+
+    ClientCustomer cust = new ClientCustomer();
+
+    cust.setName(name);
+    cust.setPhone(customer.getPhone());
+    cust.setAge(customer.getAge());
+    cust.setActive(customer.getActive());
+    cust.setState(customer.getState());
+
+    custsList.add(cust);
+
+    getCustomerResponse.setAvailableCustomersList(custsList);
+
+    return getCustomerResponse;
   }
 
 }
